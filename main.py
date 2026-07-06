@@ -1,4 +1,5 @@
 import telebot
+import os
 import logging
 import subprocess
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
@@ -11,6 +12,9 @@ blocked_ports = [8700, 20000, 443, 17500, 9031, 20002, 20001]
 user_attack_details = {}
 active_attacks = {}
 
+if os.path.exists('./soul'):
+    os.chmod('./soul', 0o755)
+    
 def run_attack_command_sync(user_id, target_ip, target_port, action):
     try:
         if action == 1:
@@ -83,4 +87,5 @@ def start_command(message):
 
 if __name__ == "__main__":
     logging.info("Starting bot...")
+    bot.delete_webhook(drop_pending_updates=True)
     bot.polling(none_stop=True)
