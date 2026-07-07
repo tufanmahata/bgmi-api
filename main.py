@@ -30,11 +30,11 @@ def run_attack_command_sync(user_id, target_ip, target_port, action):
 
 def send_main_buttons(chat_id):
     markup = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True, one_time_keyboard=True)
-    markup.add(KeyboardButton("ATTACK"), KeyboardButton("Start Attack 🚀"), KeyboardButton("Stop Attack"))
+    markup.add(KeyboardButton("Attack"), KeyboardButton("Start Attack 🚀"), KeyboardButton("Stop Attack"))
     bot.send_message(chat_id, "*Choose an action:*", reply_markup=markup, parse_mode='Markdown')
 
 
-@bot.message_handler(commands=['Attack'])
+@bot.message_handler(func=lambda message: message.text == "Attack") #commands=['Attack'])
 def attack_command(message):
     bot.send_message(message.chat.id, "*Please provide the target IP and port separated by a space.*", parse_mode='Markdown')
     bot.register_next_step_handler(message, process_attack_ip_port)
