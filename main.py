@@ -2,6 +2,7 @@ import telebot
 import os
 import logging
 import subprocess
+import datetime 
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -25,7 +26,13 @@ def run_attack_command_sync(user_id, target_ip, target_port, action):
             if pid:
                 subprocess.run(["kill", str(pid)], check=True)
     except Exception as e:
-        logging.error(f"Error in run_attack_command_sync: {e}")
+        log_file_path = "error_log.txt"
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            with open(log_file_path, "a", encoding="utf-8") as f:
+                f.write(f"[{timestamp}] Error in run_attack_command_sync (User: {user_id}, Target: {target_ip}:{target_port}): {e}\n")
+        except Exception as file_error:
+            print(f"Failed to write to log file: {file_error}")
         
 
 def send_main_buttons(chat_id):
