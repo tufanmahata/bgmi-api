@@ -2,6 +2,7 @@ import telebot
 import logging
 import subprocess
 import threading
+import os
 from datetime import datetime, timedelta
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
