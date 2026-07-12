@@ -1,6 +1,7 @@
 import telebot
 import logging
 import subprocess
+import threading
 from datetime import datetime, timedelta
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -64,8 +65,9 @@ def process_attack_ip_port(message):
         send_main_buttons(message.chat.id,1)
     except Exception as e:
         bot.send_message(message.chat.id, "*shi se add kro na *", parse_mode='Markdown')
-        send_main_buttons(message.chat.id,0)
-       logging.error(f"Error in processing attack IP and port: {e}")
+        send_main_buttons(message.chat.id, 0)
+        logging.error(f"Error in processing attack IP and port: {e}")
+
         
 
 @bot.message_handler(func=lambda message: message.text == "Start Attack 🚀")
