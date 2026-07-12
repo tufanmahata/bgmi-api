@@ -29,22 +29,16 @@ def run_attack_command_sync(user_id, target_ip, target_port, action):
         send_main_buttons(message.chat.id,0)
         
         
-def send_main_buttons(chat_id,action):
-   
-     markup = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, one_time_keyboard=True)
+def send_main_buttons(chat_id, action):
+    markup = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, one_time_keyboard=True)
     
     if action == 0:
-      
-    markup.add(KeyboardButton("Attack"))
-    
+        markup.add(KeyboardButton("Attack"))
     elif action == 1:
-    
-    markup.add(KeyboardButton("Start Attack 🚀"))
-    
+        markup.add(KeyboardButton("Start Attack 🚀"))
     elif action == 2:
-    
-    markup.add(KeyboardButton("Stop Attack"))
-    
+        markup.add(KeyboardButton("Stop Attack"))
+        
     bot.send_message(chat_id, "*Choose an action:*", reply_markup=markup, parse_mode='Markdown')
 
 
